@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Release (unsigned)
+        run: |
+          xcodebuild -project DraftAid.xcodeproj \
+            -scheme DraftAid \
+            -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+
+      - name: Zip app
+        run: |
+          cd build/Build/Products/Release
+          zip -r "$GITHUB_WORKSPACE/DraftAid.zip" DraftAid.app
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: DraftAid.zip
+          generate_release_notes: true
