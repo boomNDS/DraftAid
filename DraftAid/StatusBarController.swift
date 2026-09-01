@@ -1,6 +1,10 @@
 import Cocoa
 import SwiftUI
 
+extension Notification.Name {
+    static let draftAidPanelDidShow = Notification.Name("DraftAidPanelDidShow")
+}
+
 class StatusBarController {
     private var statusItem: NSStatusItem!
     private var floatingPanel: FloatingPanel!
@@ -29,6 +33,7 @@ class StatusBarController {
         floatingPanel.center()
         floatingPanel.makeKeyAndOrderFront(nil)
         floatingPanel.focusInput()
+        NotificationCenter.default.post(name: .draftAidPanelDidShow, object: nil)
     }
 
     func hidePanel() {

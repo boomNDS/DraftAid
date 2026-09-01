@@ -17,10 +17,19 @@ struct ContentView: View {
     @State private var lastRunFailed = false
     @State private var hasAPIKey = true
     @State private var outputModeId = ""
+    @State private var lastPasteboardChangeCount = -1
+    @State private var lastProcessedInput = ""
     @AppStorage(AIEngine.defaultsKey) private var engineRaw = AIEngine.apple.rawValue
+    @AppStorage("draftaid.lastModeId") private var lastModeId = ""
 
     private var engine: AIEngine {
         AIEngine(rawValue: engineRaw) ?? .apple
+    }
+
+    /// True when the visible result matches the current input — Enter then
+    /// means "copy & close" instead of re-processing.
+    private var canCopyAndClose: Bool {
+        !output.isEmpty && !isProcessing && !lastRunFailed && input == lastProcessedInput
     }
 
     var currentMode: DraftMode? {
@@ -52,7 +61,7 @@ struct ContentView: View {
                     CommandInput(
                         text: $input,
                         onTab: cycleMode,
-                        onEnter: process,
+                        onEnter: handleEnter,
                         onEscape: onDismiss
                     )
                     .frame(height: 28)
@@ -332,6 +341,7 @@ struct ContentView: View {
                     Button {
                         if let idx = modeManager.enabledModes.firstIndex(where: { $0.id == mode.id }) {
                             modeIndex = idx
+                            lastModeId = mode.id
                         }
                     } label: {
                         HStack(spacing: 4) {
@@ -361,7 +371,9 @@ struct ContentView: View {
 
                 Spacer()
 
-                Text("Tab ↹ cycle · Enter ↵ go · Esc ✕ close")
+                Text(canCopyAndClose
+                     ? "Enter ↵ copy & close · Esc ✕ cancel"
+                     : "Tab ↹ cycle · Enter ↵ go · Esc ✕ close")
                     .font(.caption2)
                     .foregroundColor(.secondary.opacity(0.6))
             }
@@ -379,6 +391,13 @@ struct ContentView: View {
         .onAppear {
             history = LocalStorage.shared.load()
             hasAPIKey = GeminiService.shared.hasAPIKey
+            // Restore the last used mode
+            if let idx = modeManager.enabledModes.firstIndex(where: { $0.id == lastModeId }) {
+                modeIndex = idx
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .draftAidPanelDidShow)) { _ in
+            grabClipboard()
         }
         .onChange(of: showAPISettings) {
             if !showAPISettings {
@@ -405,6 +424,35 @@ struct ContentView: View {
         withAnimation(.easeInOut(duration: 0.12)) {
             modeIndex = (modeIndex + 1) % enabled.count
         }
+        lastModeId = enabled[(modeIndex % enabled.count)].id
+    }
+
+    /// Enter re-processes edited text, but copies & closes when the result
+    /// on screen already matches the current input.
+    private func handleEnter() {
+        if canCopyAndClose {
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(output, forType: .string)
+            onDismiss()
+        } else {
+            process()
+        }
+    }
+
+    /// When the panel opens with fresh clipboard content, prefill the input.
+    /// Unchanged clipboard = keep whatever the user was working on.
+    private func grabClipboard() {
+        let pasteboard = NSPasteboard.general
+        guard pasteboard.changeCount != lastPasteboardChangeCount else { return }
+        lastPasteboardChangeCount = pasteboard.changeCount
+
+        guard let text = pasteboard.string(forType: .string),
+              !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        else { return }
+
+        input = text
+        output = ""
+        lastRunFailed = false
     }
 
     private func process() {
@@ -452,6 +500,7 @@ struct ContentView: View {
                         outputModeId = mode.id
                         isProcessing = false
                         lastRunFailed = false
+                        lastProcessedInput = text
                         history.insert(item, at: 0)
                         history = Array(history.prefix(100)) // cap stored history
                     }
