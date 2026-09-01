@@ -1,5 +1,11 @@
 # DraftAid
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Swift](https://img.shields.io/badge/Swift-F05138?style=flat&logo=swift&logoColor=white)](https://swift.org/)
+[![SwiftUI](https://img.shields.io/badge/SwiftUI-007AFF?style=flat&logo=apple&logoColor=white)](https://developer.apple.com/xcode/swiftui/)
+[![macOS](https://img.shields.io/badge/macOS-26+-000000?style=flat&logo=apple&logoColor=white)](https://www.apple.com/macos/)
+[![Gemini](https://img.shields.io/badge/Gemini-4285F4?style=flat&logo=google&logoColor=white)](https://ai.google.dev/)
+
 A fast macOS menu bar utility that transforms text based on the selected mode. Press a global hotkey, type, hit Enter, copy the result.
 
 ## Features
