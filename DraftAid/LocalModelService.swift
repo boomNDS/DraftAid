@@ -11,8 +11,8 @@ enum AIEngine: String, CaseIterable {
 
     var label: String {
         switch self {
-        case .apple: return "On-Device (Apple) — free, private, no setup"
-        case .gemini: return "Cloud (Gemini) — best quality, needs API key"
+        case .apple: return "On-Device (Apple) - free, private, no setup"
+        case .gemini: return "Cloud (Gemini) - best quality, needs API key"
         }
     }
 }

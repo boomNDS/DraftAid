@@ -26,7 +26,7 @@ struct ContentView: View {
         AIEngine(rawValue: engineRaw) ?? .apple
     }
 
-    /// True when the visible result matches the current input — Enter then
+    /// True when the visible result matches the current input - Enter then
     /// means "copy & close" instead of re-processing.
     private var canCopyAndClose: Bool {
         !output.isEmpty && !isProcessing && !lastRunFailed && input == lastProcessedInput
@@ -221,7 +221,7 @@ struct ContentView: View {
                         .foregroundColor(.blue)
                     Text("Set up your free API key")
                         .font(.system(size: 14, weight: .semibold))
-                    Text("Cloud mode runs on Google's Gemini with your own key. Free to create — takes about a minute.")
+                    Text("Cloud mode runs on Google's Gemini with your own key. Free to create - takes about a minute.")
                         .font(.caption)
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)

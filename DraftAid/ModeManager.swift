@@ -85,7 +85,7 @@ class ModeManager: ObservableObject {
     }
 
     /// Prompts we have since improved. If a saved default mode still carries
-    /// the old untouched prompt, upgrade it — but never clobber user edits.
+    /// the old untouched prompt, upgrade it - but never clobber user edits.
     private static let legacyPrompts: [String: String] = [
         "gitBranch": "Convert the description into a valid git branch name. Rules: kebab-case (lowercase, hyphens between words), remove articles (a, an, the), keep under 50 chars. Output ONLY the branch name, no backticks, no explanation."
     ]

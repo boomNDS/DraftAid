@@ -10,15 +10,15 @@ A fast macOS menu bar utility that transforms text based on the selected mode. P
 
 ## Features
 
-- **On-device by default** — Apple's local model (Apple Intelligence) handles everything offline, free, no setup
-- **Optional Gemini cloud** — bring your own Google API key for higher quality
-- **Menu bar only** — lives as a pencil icon in the status bar, no dock icon, no main window
-- **Global hotkey** — `Cmd+Shift+T` opens the floating panel from anywhere
-- **Keyboard-driven flow** — `Tab` cycles modes, `Enter` processes, `Esc` closes
-- **6 built-in modes** — Fix Grammar, Rewrite, Shorten, Casual, Formal, Git Branch
-- **Custom modes** — add your own with a custom prompt template, icon, and output language
-- **History** — last 3 entries shown inline (click to copy), full history in a separate sheet
-- **Local persistence** — modes in UserDefaults, history in JSON
+- **On-device by default** - Apple's local model (Apple Intelligence) handles everything offline, free, no setup
+- **Optional Gemini cloud** - bring your own Google API key for higher quality
+- **Menu bar only** - lives as a pencil icon in the status bar, no dock icon, no main window
+- **Global hotkey** - `Cmd+Shift+T` opens the floating panel from anywhere
+- **Keyboard-driven flow** - `Tab` cycles modes, `Enter` processes, `Esc` closes
+- **6 built-in modes** - Fix Grammar, Rewrite, Shorten, Casual, Formal, Git Branch
+- **Custom modes** - add your own with a custom prompt template, icon, and output language
+- **History** - last 3 entries shown inline (click to copy), full history in a separate sheet
+- **Local persistence** - modes in UserDefaults, history in JSON
 
 ## Usage
 
@@ -44,7 +44,7 @@ Custom modes are managed via the gear icon → **Modes**. Each mode has a prompt
 
 ## AI Engines
 
-DraftAid processes text **on-device by default** using Apple's Foundation Models (Apple Intelligence, macOS 26+) — free, private, offline, zero configuration.
+DraftAid processes text **on-device by default** using Apple's Foundation Models (Apple Intelligence, macOS 26+) - free, private, offline, zero configuration.
 
 For higher-quality results, switch to **Cloud (Gemini)** in the engine settings (cpu icon in the panel):
 

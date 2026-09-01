@@ -77,7 +77,7 @@ struct HistoryDetailView: View {
 
     private func tokenBadge(label: String, value: Int?) -> some View {
         VStack(spacing: 2) {
-            Text(value.map(String.init) ?? "—")
+            Text(value.map(String.init) ?? "-")
                 .font(.system(size: 13, weight: .semibold, design: .monospaced))
             Text(label)
                 .font(.caption2)

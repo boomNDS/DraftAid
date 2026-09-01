@@ -35,11 +35,11 @@ struct GeminiService {
     /// Used as a last resort when the selected model stays overloaded.
     static let fallbackModel = "gemini-3.6-flash"
     static let availableModels: [(id: String, label: String)] = [
-        ("gemini-flash-latest", "Flash Latest — auto-updates to newest"),
-        ("gemini-3.7-flash", "3.7 Flash — latest stable"),
-        ("gemini-3.6-flash", "3.6 Flash — stable"),
-        ("gemini-3.5-flash", "3.5 Flash — legacy stable"),
-        ("gemini-3.5-flash-lite", "3.5 Flash-Lite — fastest, cheapest")
+        ("gemini-flash-latest", "Flash Latest - auto-updates to newest"),
+        ("gemini-3.7-flash", "3.7 Flash - latest stable"),
+        ("gemini-3.6-flash", "3.6 Flash - stable"),
+        ("gemini-3.5-flash", "3.5 Flash - legacy stable"),
+        ("gemini-3.5-flash-lite", "3.5 Flash-Lite - fastest, cheapest")
     ]
 
     private var model: String {
@@ -83,7 +83,7 @@ struct GeminiService {
         }
     }
 
-    /// Throws nil on success — used to verify a key before/after saving it.
+    /// Throws nil on success - used to verify a key before/after saving it.
     func validateKey(_ apiKey: String) async throws {
         _ = try await performRequest(prompt: "Reply with: OK", model: GeminiService.defaultModel, apiKey: apiKey)
     }

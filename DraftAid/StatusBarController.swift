@@ -61,7 +61,7 @@ class FloatingPanel: NSPanel {
         self.backgroundColor = .clear
         self.hasShadow = true
         self.isOpaque = false
-        // Borderless panel has no title bar — let users drag it by empty areas
+        // Borderless panel has no title bar - let users drag it by empty areas
         self.isMovableByWindowBackground = true
 
         // Create the SwiftUI view
